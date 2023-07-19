@@ -1,0 +1,2 @@
+docker run --name myredis -p 6379:6379 -d redis
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=P@ssword_123" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
