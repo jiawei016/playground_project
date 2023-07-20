@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
 using web_api_1.Models;
 using web_api_1.Services.Interfaces;
+using web_api_1.Services.Modules.Interfaces;
 
 namespace web_api_1.Controllers
 {
@@ -12,36 +13,31 @@ namespace web_api_1.Controllers
     [Route("api/v1/[controller]/[action]")]
     public class ExpressApiController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _iUnitOfWork;
 
-        public ExpressApiController(IUnitOfWork unitOfWork)
+        public ExpressApiController(IUnitOfWork iUnitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            _iUnitOfWork = iUnitOfWork;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetValueOf(string key)
         {
-            var value = await _unitOfWork.ExpressService.GetValueAsync(key);
+            var value = await _iUnitOfWork.ItemService.GetValueAsync(key);
             return Ok(value);
         }
 
         [HttpPost]
         public async Task<IActionResult> SetValueOf(string key, [FromBody] string value)
         {
-            var _redis_model = new UContentModel.URedis_Content { 
-                redis_id = key,
-                redis_value = value
-            };
-            var _cassandra_model = new UContentModel.UCassandra_Content
-            {
-                query = $"Insert into usession.content(content_id, content_value) values ({key}, {value})"
-            };
-            var _model = new UContentModel { 
-                _URedis_Content = _redis_model,
-                _UCassandra_Content = _cassandra_model
-            };
-            await _unitOfWork.ExpressService.SetValueAsync(_model);
+            await _iUnitOfWork.ItemService.SaveValueAsync(key, value);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetIsProcessed(string key, string Id)
+        {
+            await _iUnitOfWork.ItemService.SetIsProcessedAsync(key, Id);
             return Ok();
         }
     }

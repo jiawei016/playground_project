@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ovxLeUrumFh7Ez5Vtiln6wYmMkE/Yf7a6oV8QCzXjTi2KpZZz8d0o5+5T6ei6/X9uAXDuUOMlGKn4RE8yrV8Tw==",
+  "dgSpecHash": "PrYwHpsrwFUrWu/KyHhGpScbqJBQv62d3gAZiIbAiVZ4VgaseU1qhCRfKLQvt6JYn+0QiD24kgZMjXu59S6fiQ==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_publisher\\worker_service_publisher.csproj",
+  "projectFilePath": "D:\\Storage\\Project\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_publisher\\worker_service_publisher.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jerem\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",
     "C:\\Users\\jerem\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",

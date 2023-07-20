@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_subscriber\\worker_service_subscriber.csproj": {}
+    "D:\\Storage\\Project\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_subscriber\\worker_service_subscriber.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_subscriber\\worker_service_subscriber.csproj": {
+    "D:\\Storage\\Project\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_subscriber\\worker_service_subscriber.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_subscriber\\worker_service_subscriber.csproj",
+        "projectUniqueName": "D:\\Storage\\Project\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_subscriber\\worker_service_subscriber.csproj",
         "projectName": "worker_service_subscriber",
-        "projectPath": "D:\\Projects\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_subscriber\\worker_service_subscriber.csproj",
+        "projectPath": "D:\\Storage\\Project\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_subscriber\\worker_service_subscriber.csproj",
         "packagesPath": "C:\\Users\\jerem\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_subscriber\\obj\\",
+        "outputPath": "D:\\Storage\\Project\\playground_project\\calculator_with_redis_in_docker\\worker_service\\worker_service_subscriber\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\Applications\\Visual Studio 2022\\Shared Components\\NuGetPackages"
+          "D:\\Applications\\Microsoft Visual Studio\\2022\\Components, Tools, SDKs\\NuGetPackages"
         ],
         "configFilePaths": [
           "C:\\Users\\jerem\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -57,9 +57,17 @@
               "target": "Package",
               "version": "[6.0.1, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
               "version": "[1.17.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             },
             "StackExchange.Redis": {
               "target": "Package",
@@ -82,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     }

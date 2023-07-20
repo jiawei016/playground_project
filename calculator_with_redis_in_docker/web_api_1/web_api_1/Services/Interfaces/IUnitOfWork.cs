@@ -1,8 +1,10 @@
-﻿namespace web_api_1.Services.Interfaces
+﻿using web_api_1.Services.Modules.Interfaces;
+
+namespace web_api_1.Services.Interfaces
 {
     public interface IUnitOfWork
     {
-        IExpressService ExpressService { get; }
+        IItemService ItemService { get; }
         Task CommitAsync();
     }
 }
