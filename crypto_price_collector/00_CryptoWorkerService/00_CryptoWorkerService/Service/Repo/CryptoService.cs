@@ -1,5 +1,6 @@
 ﻿using _00_CryptoWorkerService.Helper;
 using _00_CryptoWorkerService.Models;
+using _00_CryptoWorkerService.Service.Repo.Interface;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,37 +9,41 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _00_CryptoWorkerService.Service
+namespace _00_CryptoWorkerService.Service.Repo
 {
-    public class CryptoService
+    public class CryptoService : ICryptoService
     {
-        public async Task<MCryptoData> GetPriceData(IHttpClientFactory _httpClientFactory, string _tokenIds)
+        private readonly IHttpClientFactory _httpClientFactory;
+        public CryptoService(IHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+        public async Task<MCryptoData> GetPriceData(string _tokenIds)
         {
             MCryptoData mCryptoData = null;
             try
             {
                 string _query = $"https://api.coingecko.com/api/v3/coins/{_tokenIds}";
-                // Create HttpRequestMessage and set headers
+
                 var request = new HttpRequestMessage(HttpMethod.Get, _query);
 
-                // Send the request using HttpClient
-                var httpClient = _httpClientFactory.CreateClient("GitHub");
-                var response = await httpClient.SendAsync(request);
+                var _httpClient = _httpClientFactory.CreateClient("http_client");
 
-                // Process the response
+                var response = _httpClient.GetAsync(_query).Result;
+
                 if (response.IsSuccessStatusCode)
                 {
-                    // Handle successful response
                     var content = await response.Content.ReadAsStringAsync();
-                    // Process the content
+
                     if (string.IsNullOrEmpty(content))
                     {
                         mCryptoData = null;
                     }
-                    else if (JsonHelper.IsValidJson(content))
+                    else if (content.IsValidJson())
                     {
                         mCryptoData = new MCryptoData();
                         mCryptoData = JsonConvert.DeserializeObject<MCryptoData>(content);
+                        Console.WriteLine($"Current Price MYR : {mCryptoData.market_data.current_price.myr}");
                     }
                     else
                     {
@@ -47,22 +52,11 @@ namespace _00_CryptoWorkerService.Service
                 }
                 else
                 {
-                    // Handle error response
-                    // Log or throw appropriate exceptions
+                    mCryptoData = null;
                 }
-            }
-            catch (HttpRequestException ex)
-            {
-                // Handle network-related errors
-                // Log or throw appropriate exceptions
-
-                mCryptoData = null;
             }
             catch (Exception ex)
             {
-                // Handle other exceptions
-                // Log or throw appropriate exceptions
-
                 mCryptoData = null;
             }
 

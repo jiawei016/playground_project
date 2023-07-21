@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RgtPRAC/8g0ci4hEfdkjXD7X77P2NC5L100MmaKX8D6RsCE5dYmR08Aw+/yWq/5NqDo3EoFMwAb3LnOGuGHP2w==",
+  "dgSpecHash": "QaJrnHt83vzhCJJJZP287m2ioP3uAEwXCSsbr2/FJyClbA8zcR36Asw4uZu5pEGEErtx7ywk7p5AyIhGuqtJAA==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\playground_project\\crypto_price_collector\\00_CryptoWorkerService\\00_CryptoWorkerService\\00_CryptoWorkerService.csproj",
+  "projectFilePath": "D:\\Storage\\Project\\playground_project\\crypto_price_collector\\00_CryptoWorkerService\\00_CryptoWorkerService\\00_CryptoWorkerService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jerem\\.nuget\\packages\\confluent.kafka\\2.2.0\\confluent.kafka.2.2.0.nupkg.sha512",
     "C:\\Users\\jerem\\.nuget\\packages\\librdkafka.redist\\2.2.0\\librdkafka.redist.2.2.0.nupkg.sha512",

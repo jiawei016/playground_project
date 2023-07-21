@@ -1,0 +1,5 @@
+docker compose command
+docker-compose -f kafka-docker-compose.yaml up -d
+
+Management Page
+http://localhost:9021/clusters

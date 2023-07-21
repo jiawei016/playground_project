@@ -1,4 +1,5 @@
 ﻿using _00_CryptoWorkerService.Models;
+using _00_CryptoWorkerService.Service.Repo.Interface;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -8,34 +9,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _00_CryptoWorkerService.Service
+namespace _00_CryptoWorkerService.Service.Repo
 {
-    public class KafkaService
+    public class KafkaService : IKafkaService
     {
         public async Task<bool> ProduceMessage(MCryptoData _mCryptoData)
         {
             bool _message_produced = false;
-            // Kafka producer configuration
             var _producerConfig = new ProducerConfig
             {
-                BootstrapServers = "your-bootstrap-servers",
-                ClientId = "your-client-id",
-                // Additional configuration options
+                BootstrapServers = "localhost:9092",
+                ClientId = "bitcoin-price-listener-app",
             };
 
             try
             {
-                // Produce messages to Kafka topic
-                var topic = "your-topic";
+                var topic = "bitcoin-price-topic";
                 var message = new Message<Null, string>
                 {
                     Value = JsonConvert.SerializeObject(_mCryptoData),
                 };
 
-                // Handle delivery reports and errors
                 using (var producer = new ProducerBuilder<Null, string>(_producerConfig).Build())
                 {
-                    var result = await producer.ProduceAsync(topic, message);
+                    var result = producer.ProduceAsync(topic, message).Result;
 
                     if (result.Status == PersistenceStatus.Persisted)
                     {
@@ -44,12 +41,11 @@ namespace _00_CryptoWorkerService.Service
 
                     Console.WriteLine($"Message delivered to {result.TopicPartitionOffset}");
 
-                    // Gracefully close the producer
                     producer.Flush(TimeSpan.FromSeconds(10));
                     producer.Dispose();
                 }
-            } 
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _message_produced = false;
             }

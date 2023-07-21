@@ -1,6 +1,8 @@
 using _00_CryptoWorkerService.Helper;
 using _00_CryptoWorkerService.Models;
-using _00_CryptoWorkerService.Service;
+using _00_CryptoWorkerService.Service.Repo;
+using _00_CryptoWorkerService.Service.Repo.Interface;
+using _00_CryptoWorkerService.Service.UOW;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text.Json.Nodes;
@@ -10,25 +12,34 @@ namespace _00_CryptoWorkerService
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly IHttpClientFactory _httpClientFactory;
+        private IUnitOfWork _unitOfWork;
+        private readonly IServiceProvider _serviceProvider;
 
-        public Worker(ILogger<Worker> logger, IHttpClientFactory httpClientFactory)
+        public Worker(ILogger<Worker> logger, IServiceProvider serviceProvider)
         {
             _logger = logger;
-            _httpClientFactory = httpClientFactory;
+            _serviceProvider = serviceProvider;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            CryptoService _CryptoService = new CryptoService();
-            KafkaService _KafkaService = new KafkaService();
+            var scope = _serviceProvider.CreateScope();
             while (!stoppingToken.IsCancellationRequested)
             {
-                MCryptoData _mCryptoData = await _CryptoService.GetPriceData(_httpClientFactory, "bitcoin");
-                bool _produced_status = await _KafkaService.ProduceMessage(_mCryptoData);
+                try
+                {
+                    _unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(3000, stoppingToken);
+                    bool _status = await _unitOfWork.BitcoinPriceProducer.get_price_and_producemessage("bitcoin");
+
+                    Console.WriteLine($"Worker running at: {DateTimeOffset.Now}, Status is {_status}");
+                }
+                catch(Exception ex)
+                {
+
+                }
+
+                Task.Delay(5000, stoppingToken).Wait();
             }
         }
     }
