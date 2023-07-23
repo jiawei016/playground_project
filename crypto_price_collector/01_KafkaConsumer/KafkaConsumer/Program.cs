@@ -1,17 +1,27 @@
 using KafkaConsumer;
+using KafkaConsumer.Contexts;
 using KafkaConsumer.Services.Repos;
 using KafkaConsumer.Services.Repos.Interfaces;
 using KafkaConsumer.Services.UOW;
+using KafkaConsumer.Services.UOW.bitcoin_price_consumer;
+using Microsoft.EntityFrameworkCore;
 
-IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
-    {
-        services.AddScoped<IKafkaService, KafkaService>();
+var builder = Host.CreateDefaultBuilder(args);
+builder.ConfigureServices((ctx, services) =>
+{
+    services.AddScoped<IKafkaService, KafkaService>();
+    services.AddScoped<IRedisService, RedisService>();
+    services.AddScoped<IBitcoinPriceConsumer, BitcoinPriceConsumer>();
 
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+    services.AddDbContext<PostgreDbContext>(options => {
+        options.UseNpgsql(ctx.Configuration.GetSection("PostgreDBConfiguration").GetSection("ConnectionString").Value);
+    });
 
-        services.AddHostedService<Worker>();
-    })
-    .Build();
+    services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-await host.RunAsync();
+    services.AddHostedService<Worker>();
+});
+
+IHost host = builder.Build();
+
+host.RunAsync();

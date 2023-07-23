@@ -1,5 +1,8 @@
 ﻿using Confluent.Kafka;
+using KafkaConsumer.Contexts;
+using KafkaConsumer.Models;
 using KafkaConsumer.Services.Repos.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +13,13 @@ namespace KafkaConsumer.Services.Repos
 {
     public class KafkaService : IKafkaService
     {
-        public KafkaService() { }
+        private IRedisService _IRedisService;
+        private readonly PostgreDbContext _postgreDbContext;
+        public KafkaService(IRedisService redisService, PostgreDbContext postgreDbContext) 
+        {
+            _IRedisService = redisService;
+            _postgreDbContext = postgreDbContext;
+        }
 
         public async Task ConsumeTopic(string kafkaTopic)
         {
@@ -36,15 +45,82 @@ namespace KafkaConsumer.Services.Repos
 
                         if (consumeResult != null)
                         {
+                            string _consumed_message = consumeResult.Message.Value;
+
+                            bool _redis_Status = await SaveToRedis(_consumed_message);
+                            if (_redis_Status)
+                            {
+                                await SaveToPostgres(_consumed_message);
+                            }
                             // Process the consumed message here
-                            Console.WriteLine($"Received message: {consumeResult.Message.Value}");
+                            Console.WriteLine($"Received message: {_consumed_message}");
                         }
+
+                        Task.Delay(500).Wait();
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");
                 }
+            }
+        }
+
+        private async Task<bool> SaveToRedis(string _messageValue)
+        {
+            try
+            {
+                string _value = _IRedisService.Get("bitcoin_consumer_key").Result;
+                MCryptoData _message = JsonConvert.DeserializeObject<MCryptoData>(_messageValue);
+
+                List<MCryptoData> _data = null;
+
+                if (_value != null)
+                {
+                    _data = JsonConvert.DeserializeObject<List<MCryptoData>>(_value);
+                    _data.Add(_message);
+                }
+                else
+                {
+                    _data = new List<MCryptoData>();
+                    _data.Add(_message);
+                }
+                string _redis_value = JsonConvert.SerializeObject(_data);
+
+                _IRedisService.Save("bitcoin_consumer_key", _redis_value).Wait();
+
+                return true;
+            }
+            catch(Exception ex) 
+            {
+                return false;
+            }
+        }
+
+        private async Task<bool> SaveToPostgres(string _messageValue)
+        {
+            try
+            {
+                MCryptoData _messageData = JsonConvert.DeserializeObject<MCryptoData>(_messageValue);
+                DateTimeOffset now = (DateTimeOffset)DateTime.UtcNow;
+
+                BitcoinPriceModel _model = new BitcoinPriceModel
+                {
+                    Id = now.ToUnixTimeMilliseconds(),
+                    Symbol = _messageData.symbol,
+                    Name = _messageData.name,
+                    Price = _messageData.market_data.current_price.myr
+                };
+
+                await _postgreDbContext.AddAsync(_model);
+
+                _postgreDbContext.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

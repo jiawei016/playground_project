@@ -70,3 +70,17 @@ D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\Ka
 D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\obj\Debug\net6.0\KafkaConsumer.pdb
 D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\obj\Debug\net6.0\KafkaConsumer.genruntimeconfig.cache
 D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\obj\Debug\net6.0\ref\KafkaConsumer.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Pipelines.Sockets.Unofficial.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\StackExchange.Redis.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\System.IO.Pipelines.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Humanizer.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Npgsql.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\Storage\Project\playground_project\crypto_price_collector\01_KafkaConsumer\KafkaConsumer\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll

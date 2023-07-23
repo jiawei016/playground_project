@@ -64,7 +64,7 @@ namespace _00_CryptoWorkerService.Service.Repo
                     {
                         current_price = new MCryptoData._current_price
                         {
-                            myr = 30000
+                            myr = Double.Parse(DateTime.Now.ToString("mmss"))
                         }
                     }
                 };
