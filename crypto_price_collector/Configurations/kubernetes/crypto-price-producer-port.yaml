@@ -1,0 +1,12 @@
+apiVersin: v1
+kind: Service
+metadata:
+  name: crypto_price_producer_port
+spec:
+  type: NodePort
+  ports:
+    - port: 3050
+      targetPort: 5050
+      nodePort: 31515
+  selector:
+    component: crypto_price_producer_workerservice

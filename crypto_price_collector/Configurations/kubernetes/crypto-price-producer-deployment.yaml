@@ -1,0 +1,19 @@
+apiVersin: apps/v1
+kind: Deployment
+metadata:
+  name: crypto_price_producer_deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: crypto_price_producer_workerservice
+  template:
+    metadata: 
+      labels:
+        component: crypto_price_producer_workerservice
+    spec:
+      containers:
+        - name: crypto_price_producer_deployment
+          image: jiawei016/crypto-price-collector-producer
+          ports:
+            containerPort: 5050

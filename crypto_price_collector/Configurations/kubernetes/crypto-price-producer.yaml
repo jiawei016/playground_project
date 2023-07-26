@@ -1,0 +1,12 @@
+apiVersin: v1
+kind: Pod
+metadata:
+  name: crypto_price_producer
+  labels:
+    component: crypto_price_producer_workerservice
+spec:
+  containers:
+    - name: crypto_price_producer
+      image: jiawei016/crypto-price-collector-producer
+      ports:
+        - containerPort: 5050
