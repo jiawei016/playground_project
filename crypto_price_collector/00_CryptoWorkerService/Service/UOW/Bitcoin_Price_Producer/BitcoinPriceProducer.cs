@@ -31,6 +31,7 @@ namespace _00_CryptoWorkerService.Service.UOW.Bitcoin_Price_Producer
 
                 bool status = await _IKafkaService.ProduceMessage(mCryptoData);
 
+                Console.WriteLine($"Published to kafka: {status}");
                 if (status)
                 {
                     return true;

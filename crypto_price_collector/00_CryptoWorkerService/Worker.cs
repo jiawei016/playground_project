@@ -23,6 +23,12 @@ namespace _00_CryptoWorkerService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            Console.WriteLine($"Worker waiting to start at: {DateTimeOffset.Now}");
+
+            Task.Delay(60000, stoppingToken).Wait();
+
+            Console.WriteLine($"Worker start at: {DateTimeOffset.Now}");
+
             var scope = _serviceProvider.CreateScope();
             while (!stoppingToken.IsCancellationRequested)
             {

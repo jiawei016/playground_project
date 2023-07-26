@@ -13,12 +13,17 @@ namespace _00_CryptoWorkerService.Service.Repo
 {
     public class KafkaService : IKafkaService
     {
+        private string kafka_BootstrapServers;
+        public KafkaService(IConfiguration configuration)
+        {
+            kafka_BootstrapServers = configuration.GetSection("KafkaConfiguration").GetSection("ConnectionString").Value;
+        }
         public async Task<bool> ProduceMessage(MCryptoData _mCryptoData)
         {
             bool _message_produced = false;
             var _producerConfig = new ProducerConfig
             {
-                BootstrapServers = "localhost:9092",
+                BootstrapServers = kafka_BootstrapServers,
                 ClientId = "bitcoin-price-listener-app",
             };
 

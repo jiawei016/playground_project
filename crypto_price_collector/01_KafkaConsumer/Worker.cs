@@ -1,4 +1,5 @@
 using KafkaConsumer.Services.UOW;
+using System.Net.NetworkInformation;
 
 namespace KafkaConsumer
 {
@@ -16,6 +17,12 @@ namespace KafkaConsumer
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            Console.WriteLine($"Worker waiting to start at: {DateTimeOffset.Now}");
+
+            Task.Delay(60000, stoppingToken).Wait();
+
+            Console.WriteLine($"Worker start at: {DateTimeOffset.Now}");
+
             var scope = _serviceProvider.CreateScope();
 
             try
@@ -28,7 +35,8 @@ namespace KafkaConsumer
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine($"Error at: ");
+                Console.WriteLine(ex.ToString());
             }
 
             while (!stoppingToken.IsCancellationRequested)

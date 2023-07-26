@@ -2,6 +2,7 @@
 using KafkaConsumer.Contexts;
 using KafkaConsumer.Models;
 using KafkaConsumer.Services.Repos.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,17 +16,19 @@ namespace KafkaConsumer.Services.Repos
     {
         private IRedisService _IRedisService;
         private readonly PostgreDbContext _postgreDbContext;
-        public KafkaService(IRedisService redisService, PostgreDbContext postgreDbContext) 
+        private string _kafkaBootstrapServers;
+        public KafkaService(IRedisService redisService, IConfiguration configuration, PostgreDbContext postgreDbContext) 
         {
             _IRedisService = redisService;
             _postgreDbContext = postgreDbContext;
+            _kafkaBootstrapServers = configuration.GetSection("KafkaConfiguration").GetSection("ConnectionString").Value;
         }
 
         public async Task ConsumeTopic(string kafkaTopic)
         {
             var config = new ConsumerConfig
             {
-                BootstrapServers = "localhost:9092",
+                BootstrapServers = _kafkaBootstrapServers,
                 GroupId = "bitcoin-price-kafka-consumer",
                 ClientId = "bitcoin-price-listener-app",
                 AutoOffsetReset = AutoOffsetReset.Earliest
@@ -48,9 +51,14 @@ namespace KafkaConsumer.Services.Repos
                             string _consumed_message = consumeResult.Message.Value;
 
                             bool _redis_Status = await SaveToRedis(_consumed_message);
+
+                            Console.WriteLine($"Save to redis: {_redis_Status}");
+
                             if (_redis_Status)
                             {
-                                await SaveToPostgres(_consumed_message);
+                                bool _postgres_Status = await SaveToPostgres(_consumed_message);
+
+                                Console.WriteLine($"Save to postgres: {_postgres_Status}");
                             }
                             // Process the consumed message here
                             Console.WriteLine($"Received message: {_consumed_message}");
@@ -93,6 +101,7 @@ namespace KafkaConsumer.Services.Repos
             }
             catch(Exception ex) 
             {
+                Console.WriteLine($"Redis error message: {ex.ToString()}");
                 return false;
             }
         }
@@ -120,6 +129,7 @@ namespace KafkaConsumer.Services.Repos
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Postgres error message: {ex.ToString()}");
                 return false;
             }
         }
