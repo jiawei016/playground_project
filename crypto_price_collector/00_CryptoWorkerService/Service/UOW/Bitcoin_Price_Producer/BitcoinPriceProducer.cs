@@ -18,11 +18,11 @@ namespace _00_CryptoWorkerService.Service.UOW.Bitcoin_Price_Producer
             _IKafkaService = serviceProvider.GetRequiredService<IKafkaService>();
         }
 
-        public async Task<bool> get_price_and_producemessage(string cryptoSymbol)
+        public async Task<bool> get_price_and_producemessage(string cryptoSymbol, double cryptoPrice)
         {
             try
             {
-                MCryptoData mCryptoData = await _ICryptoService.GetPriceData(cryptoSymbol);
+                MCryptoData mCryptoData = await _ICryptoService.GetPriceData(cryptoSymbol, cryptoPrice);
 
                 if (mCryptoData == null)
                 {

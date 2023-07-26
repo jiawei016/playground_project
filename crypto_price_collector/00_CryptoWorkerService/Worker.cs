@@ -28,6 +28,7 @@ namespace _00_CryptoWorkerService
             Task.Delay(60000, stoppingToken).Wait();
 
             Console.WriteLine($"Worker start at: {DateTimeOffset.Now}");
+            double _price_count = 0;
 
             var scope = _serviceProvider.CreateScope();
             while (!stoppingToken.IsCancellationRequested)
@@ -36,7 +37,7 @@ namespace _00_CryptoWorkerService
                 {
                     _unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
-                    bool _status = await _unitOfWork.BitcoinPriceProducer.get_price_and_producemessage("bitcoin");
+                    bool _status = await _unitOfWork.BitcoinPriceProducer.get_price_and_producemessage("bitcoin", _price_count);
 
                     Console.WriteLine($"Worker running at: {DateTimeOffset.Now}, Status is {_status}");
                 }
@@ -45,7 +46,9 @@ namespace _00_CryptoWorkerService
 
                 }
 
-                Task.Delay(5000, stoppingToken).Wait();
+                _price_count++;
+
+                Task.Delay(200, stoppingToken).Wait();
             }
         }
     }

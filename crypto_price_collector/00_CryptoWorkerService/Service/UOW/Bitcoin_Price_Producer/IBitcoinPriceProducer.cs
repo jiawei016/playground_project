@@ -9,6 +9,6 @@ namespace _00_CryptoWorkerService.Service.UOW.Bitcoin_Price_Producer
 {
     public interface IBitcoinPriceProducer
     {
-        public Task<bool> get_price_and_producemessage(string cryptoSymbol);
+        public Task<bool> get_price_and_producemessage(string cryptoSymbol, double _price);
     }
 }

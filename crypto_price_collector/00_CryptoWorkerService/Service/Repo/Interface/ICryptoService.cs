@@ -9,6 +9,6 @@ namespace _00_CryptoWorkerService.Service.Repo.Interface
 {
     public interface ICryptoService
     {
-        public Task<MCryptoData> GetPriceData(string _tokenIds);
+        public Task<MCryptoData> GetPriceData(string _tokenIds, double cryptoPrice);
     }
 }

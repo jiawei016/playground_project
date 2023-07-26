@@ -94,6 +94,8 @@ namespace KafkaConsumer.Services.Repos
                     _data.Add(_message);
                 }
                 string _redis_value = JsonConvert.SerializeObject(_data);
+                decimal megabyteSize = ((decimal)Encoding.Unicode.GetByteCount(_redis_value) / 1048576);
+                Console.WriteLine($"Size in Mbs of redis cached: {megabyteSize}");
 
                 _IRedisService.Save("bitcoin_consumer_key", _redis_value).Wait();
 

@@ -19,7 +19,7 @@ namespace _00_CryptoWorkerService.Service.Repo
         {
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<MCryptoData> GetPriceData(string _tokenIds)
+        public async Task<MCryptoData> GetPriceData(string _tokenIds, double cryptoPrice)
         {
             MCryptoData? mCryptoData = null;
             try
@@ -64,7 +64,7 @@ namespace _00_CryptoWorkerService.Service.Repo
                     {
                         current_price = new MCryptoData._current_price
                         {
-                            myr = Double.Parse(DateTime.Now.ToString("mmss"))
+                            myr = cryptoPrice
                         }
                     }
                 };
