@@ -9,6 +9,7 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    restart: always
     networks:
       - my_network
 
@@ -28,6 +29,7 @@ services:
       # KAFKA_LOG_CLEANER_DELETE_RETENTION_MS: 5000
       KAFKA_BROKER_ID: 1
       KAFKA_MIN_INSYNC_REPLICAS: 1
+    restart: always
     networks:
       - my_network
   
@@ -42,6 +44,7 @@ services:
   #     - "5432:5432"
   #   volumes:
   #     - pgdata:/var/lib/postgresql/data
+  #   restart: always
   #   networks:
   #     - my_network
 
@@ -50,6 +53,7 @@ services:
     container_name: my-redis
     ports:
       - "6379:6379"
+    restart: always
     networks:
       - my_network
 
@@ -62,6 +66,7 @@ services:
       - kafka
     environment:
       - KAFKA_BROKER=kafka:9092
+    restart: always
     networks:
       - my_network
   
@@ -83,6 +88,7 @@ services:
     links:
       - "kafka"
       - "redis"
+    restart: always
     networks:
       - my_network
 
