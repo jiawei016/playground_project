@@ -2,7 +2,7 @@ Step 1: Create a network
 docker network create -d bridge my_infra_network
 
 Step 2: Create a Postgres Container
-docker run --name my-postgres --network=my_infra_network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=P@ssword_123 -p 5432:5432 -d postgres
+docker run --name my-postgres --restart=always --network=my_infra_network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=P@ssword_123 -p 5432:5432 -d postgres
 
 Step 3: Execute docker-compose
 docker-compose -f "docker-compose-env.yaml" up -d
