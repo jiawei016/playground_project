@@ -4,5 +4,10 @@ docker network create -d bridge my_infra_network
 Step 2: Create a Postgres Container
 docker run --name my-postgres --restart=always --network=my_infra_network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=P@ssword_123 -p 5432:5432 -d postgres
 
+Step 2.1: Create a Redis Container
+docker run --name my-redis --restart=always --network=my_infra_network -p 6379:6379 -d redis:latest
+
+docker run --name some-redis -d redis redis-server --save 60 1 --loglevel warning
+
 Step 3: Execute docker-compose
 docker-compose -f "docker-compose-env.yaml" up -d

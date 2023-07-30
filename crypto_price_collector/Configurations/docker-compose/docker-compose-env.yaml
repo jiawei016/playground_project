@@ -13,7 +13,7 @@ services:
     networks:
       - my_network
 
-  kafka:
+  kafka-service:
     image: confluentinc/cp-kafka:latest
     container_name: kafka
     depends_on:
@@ -48,14 +48,14 @@ services:
   #   networks:
   #     - my_network
 
-  redis:
-    image: 'redis:latest'
-    container_name: my-redis
-    ports:
-      - "6379:6379"
-    restart: always
-    networks:
-      - my_network
+  # redis:
+  #   image: 'redis:latest'
+  #   container_name: my-redis
+  #   ports:
+  #     - "6379:6379"
+  #   restart: always
+  #   networks:
+  #     - my_network
 
   crypto_producer:
     build:
@@ -63,9 +63,9 @@ services:
       context: ../../00_CryptoWorkerService
     container_name: crypto_producer_workerservice
     depends_on:
-      - kafka
+      - kafka-service
     environment:
-      - KAFKA_BROKER=kafka:9092
+      - KAFKA_BROKER=kafka-service:9092
     restart: always
     networks:
       - my_network
@@ -76,18 +76,17 @@ services:
       context: ../../01_KafkaConsumer
     container_name: crypto_consumer_workerservice
     # depends_on:
-    #   - kafka
-    #   - redis
+    #   - kafka-service
+    #   - my-redis
     environment:
-      - KAFKA_BROKER=kafka:9092
-      - REDIS_HOST=redis
+      - KAFKA_BROKER=kafka-service:9092
+      - REDIS_HOST=my-redis
       - POSTGRES_DB_PORT=5432
       - POSTGRES_DB_HOST=my-postgres
       - POSTGRES_PASSWORD=P@ssword_123
       - POSTGRES_USER=postgres
     links:
-      - "kafka"
-      - "redis"
+      - "kafka-service"
     restart: always
     networks:
       - my_network
