@@ -1,37 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crypto-consumer
+  name: my-k8s-crypto-consumer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: crypto-consumer
+      app: my-crypto-consumer
   template:
     metadata:
       labels:
-        app: crypto-consumer
+        app: my-crypto-consumer
     spec:
       containers:
-      - name: crypto-consumer
+      - name: my-k8s-container-crypto-consumer
         image: jiawei016/crypto-price-collector-consumer
-        env:
-        - name: KAFKA_BROKER
-          value: "kafka:9092"
-        - name: REDIS_HOST
-          value: "redis"
-        - name: POSTGRES_DB_PORT
-          value: "5432"
-        - name: POSTGRES_DB_HOST
-          value: "my-postgres"
-        - name: POSTGRES_PASSWORD
-          value: "P@ssword_123"
-        - name: POSTGRES_USER
-          value: "postgres"
-        ports:
-        - containerPort: 5051
-        resources:
-          limits:
-            cpu: 500m
-            memory: 512Mi
-        restartPolicy: Always

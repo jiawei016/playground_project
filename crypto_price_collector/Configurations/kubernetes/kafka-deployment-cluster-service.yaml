@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: my_k8s_kafka_cluster_service
+  name: my-k8s-kafka-cluster-service
 spec:
   type: ClusterIP
   selector:
-    component: my_kafka
+    component: my-kafka
   ports:
     - port: 9092
-    - targetPort: 9092
+      targetPort: 9092

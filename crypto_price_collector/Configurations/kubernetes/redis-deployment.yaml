@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis
+  name: my-k8s-redis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis
+      app: my-redis
   template:
     metadata:
       labels:
-        app: redis
+        app: my-redis
     spec:
       containers:
-      - name: redis
+      - name: my-k8s-container-redis
         image: redis:latest
         ports:
         - containerPort: 6379

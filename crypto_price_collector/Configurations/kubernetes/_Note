@@ -1,23 +1,38 @@
-docker build -f Dockerfile -t k8s-crypto-price-producer .
-docker tag k8s-crypto-price-producer jiawei016/crypto-price-collector-producer:v1
-docker push jiawei016/crypto-price-collector-producer:v1
+# Step 1 Build Image to Docker Hub
+<command>docker login</command>
+<command>
+    docker build -f Dockerfile -t k8s-crypto-price-producer .
+    docker tag k8s-crypto-price-producer jiawei016/crypto-price-collector-producer
+    docker push jiawei016/crypto-price-collector-producer
+</command>
+<command>
+    docker build -f Dockerfile -t mykafkacluster-crypto_consumer .
+    docker tag mykafkacluster-crypto_consumer jiawei016/crypto-price-collector-consumer
+    docker push jiawei016/crypto-price-collector-consumer
+</command>
 
-docker tag mykafkacluster-crypto_consumer:latest jiawei016/crypto-price-collector-consumer
-docker push jiawei016/crypto-price-collector-consumer
-
-# To Delete  Kubernetes
+# Step 2 Build Kubernetes
+## To Delete  Kubernetes
 kubectl get deployments --all-namespaces
 kubectl delete deployment <deployment-name>
 kubectl delete deployment --all
 kubectl delete service --all
 
+## To Build and Up all Kubernetes Config Files
+dir kubernetes
+kubectl apply -f kubernetes
 
+## To Build and Up one by one Kubernetes Config Files
 kubectl apply -f zookeeper-deployment.yaml
 kubectl apply -f kafka-deployment.yaml
 kubectl apply -f postgres-deployment.yaml
 kubectl apply -f redis-deployment.yaml
 kubectl apply -f crypto-producer-service-deployment.yaml
 
+## To Build and Up one by one Kubernetes Config Files
+
 kubectl delete deployment crypto-producer
 kubectl apply -f crypto-producer-deployment.yaml
 kubectl apply -f crypto-consumer-deployment.yaml
+
+# Step 3 Setup Kubernetes PVC (Persistent Volume Claims) for DB

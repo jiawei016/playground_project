@@ -1,26 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crypto-producer
+  name: my-k8s-crypto-producer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: crypto-producer
+      app: my-crypto-producer
   template:
     metadata:
       labels:
-        app: crypto-producer
+        app: my-crypto-producer
     spec:
       containers:
-      - name: crypto-producer
+      - name: my-k8s-container-crypto-producer
         image: jiawei016/crypto-price-collector-producer
-        env:
-        - name: KAFKA_BROKER
-          value: "kafka-service:9092"
-        ports:
-        - containerPort: 5050
-        resources:
-          limits:
-            cpu: 500m
-            memory: 512Mi

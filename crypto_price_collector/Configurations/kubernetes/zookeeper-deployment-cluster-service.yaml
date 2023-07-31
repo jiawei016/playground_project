@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: my_k8s_zookeeper_cluster_service
+  name: my-k8s-zookeeper-cluster-service
 spec:
   type: ClusterIP
   selector:
-    component: my_zookeeper
+    component: my-zookeeper
   ports:
     - port: 2181
-    - targetPort: 2181
+      targetPort: 2181

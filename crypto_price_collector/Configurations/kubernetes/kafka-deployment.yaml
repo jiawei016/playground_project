@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my_k8s_kafka
+  name: my-k8s-kafka
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: my_kafka
+      component: my-kafka
   template:
     metadata:
       labels:
-        component: my_kafka
+        component: my-kafka
     spec:
       containers:
-        - name: my_k8s_container_kafka
+        - name: my-k8s-container-kafka
           image: confluentinc/cp-kafka:latest
           ports:
             - containerPort: 9092
@@ -21,7 +21,7 @@ spec:
           - name: KAFKA_ZOOKEEPER_CONNECT
             value: "zookeeper-service:2181"
           - name: KAFKA_ADVERTISED_LISTENERS
-            value: "PLAINTEXT://kafka:29092,PLAINTEXT_HOST://kafka:9092"
+            value: "PLAINTEXT://my-kafka:29092,PLAINTEXT_HOST://my-kafka:9092"
           - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
             value: "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
           - name: KAFKA_INTER_BROKER_LISTENER_NAME

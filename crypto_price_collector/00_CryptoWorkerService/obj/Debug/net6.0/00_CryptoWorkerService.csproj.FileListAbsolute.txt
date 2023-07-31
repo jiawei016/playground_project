@@ -225,3 +225,7 @@ D:\Storage\Project\playground_project\crypto_price_collector\00_CryptoWorkerServ
 D:\Storage\Project\playground_project\crypto_price_collector\00_CryptoWorkerService\obj\Debug\net6.0\00_CryptoWorkerService.pdb
 D:\Storage\Project\playground_project\crypto_price_collector\00_CryptoWorkerService\obj\Debug\net6.0\00_CryptoWorkerService.genruntimeconfig.cache
 D:\Storage\Project\playground_project\crypto_price_collector\00_CryptoWorkerService\obj\Debug\net6.0\ref\00_CryptoWorkerService.dll
+D:\Storage\Project\playground_project\crypto_price_collector\00_CryptoWorkerService\bin\Debug\net6.0\appsettings.DockerCompose.Development.json
+D:\Storage\Project\playground_project\crypto_price_collector\00_CryptoWorkerService\bin\Debug\net6.0\appsettings.DockerCompose.json
+D:\Storage\Project\playground_project\crypto_price_collector\00_CryptoWorkerService\bin\Debug\net6.0\appsettings.Kubernetes.Development.json
+D:\Storage\Project\playground_project\crypto_price_collector\00_CryptoWorkerService\bin\Debug\net6.0\appsettings.Kubernetes.json
