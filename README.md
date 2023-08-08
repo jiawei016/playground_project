@@ -4,9 +4,8 @@ Produce voucher triggered from Angular app, data will flow into API then it will
 # Architecture Diagram
 ![image](https://github.com/jiawei016/playground_project/assets/12298454/a1ce1971-bfcb-4acf-a9ab-f5e3aaa84285)
 
-
 # voucher_system
-# Install These Environment
+# Install These Environment in order to debug in local
 <b>Download NVM</b> from [nvm-windows#readme](https://github.com/coreybutler/nvm-windows#readme) <br />
 Open CMD to run these commands
 ````
