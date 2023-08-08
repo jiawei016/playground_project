@@ -1,4 +1,0 @@
-Add-Migration InitialMigration -c PostgreDbContext -o Data/Migrations
-
-Update-Database
-

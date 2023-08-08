@@ -11,9 +11,14 @@
     docker push jiawei016/crypto-price-collector-consumer
 </command>
 
+# Commands
+## Delete All
+kubectl delete all --all --all-namespaces
+
 # Step 2 Build Kubernetes
-## To Delete  Kubernetes
+## To Get All Kubernetes Deployment
 kubectl get deployments --all-namespaces
+## To Delete Kubernetes Deployment
 kubectl delete deployment <deployment-name>
 kubectl delete deployment --all
 kubectl delete service --all
@@ -23,6 +28,8 @@ dir kubernetes
 kubectl apply -f kubernetes
 
 ## To Build and Up one by one Kubernetes Config Files
+kubectl create namespace kafka
+
 kubectl apply -f zookeeper-deployment.yaml
 kubectl apply -f kafka-deployment.yaml
 kubectl apply -f postgres-deployment.yaml
@@ -36,3 +43,22 @@ kubectl apply -f crypto-producer-deployment.yaml
 kubectl apply -f crypto-consumer-deployment.yaml
 
 # Step 3 Setup Kubernetes PVC (Persistent Volume Claims) for DB
+## To Get All Kubernetes Persistent Volume
+kubectl get storageclass
+## To Get All Kubernetes Persistent Volume that created
+kubectl get pv
+## To Get All Kubernetes claims
+kubectl get pvc
+## To View Details of Kubernetes Persistent Volume
+kubectl describe storageclass
+
+# Step 4 Setup Kubernetes Secrets for DB Password
+kubectl create secret generic my-pgpassword-secret --from-literal PGPASSWORD=P@ssword_123
+## To Get All Kubernetes Secrets
+kubectl get secrets
+
+# Step 5 Setup ingress nginx environment
+https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
+minikube addons enable ingress

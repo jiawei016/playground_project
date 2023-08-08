@@ -1,0 +1,129 @@
+version: '3'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    restart: always
+    networks:
+      - my_network
+
+  kafka-service:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+    expose:
+      - '29092'
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-service:29092,PLAINTEXT_HOST://kafka-service:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      # KAFKA_LOG_CLEANER_DELETE_RETENTION_MS: 5000
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_BROKER_ID: 1
+      KAFKA_MIN_INSYNC_REPLICAS: 1
+    restart: always
+    networks:
+      - my_network
+
+  init-kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - kafka-service
+    networks:
+      - my_network
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      "
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server kafka-service:29092 --list
+
+      echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server kafka-service:29092 --create --if-not-exists --topic voucher-app --replication-factor 1 --partitions 1
+
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server kafka-service:29092 --list
+      "
+
+  # my-postgres:
+  #   image: 'postgres:latest'
+  #   container_name: consumer-postgres
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=P@ssword_123
+  #   ports:
+  #     - "5431:5432"
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   restart: always
+  #   networks:
+  #     - my_network
+
+  redis-service:
+    image: 'redis:latest'
+    container_name: my-redis
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - my_network
+
+  voucher_api_producer:
+    build:
+      dockerfile: Dockerfile
+      context: ../api_voucher_system
+    container_name: api_voucher_system
+    ports:
+      - "5353:80"
+    depends_on:
+      - kafka-service
+    environment:
+      - KAFKA_BROKER=kafka-service:9092
+    restart: always
+    networks:
+      - my_network
+
+  voucher_service_consumer:
+    build:
+      dockerfile: Dockerfile
+      context: ../KafkaConsumer
+    container_name: kafka_consumer
+    depends_on:
+      - kafka-service
+      - redis-service
+    environment:
+      - KAFKA_BROKER=kafka-service:9092
+    restart: always
+    networks:
+      - my_network
+  
+  voucher_api_client:
+    build:
+      dockerfile: Dockerfile
+      context: ../api_voucher_client
+    container_name: api_voucher_client
+    ports:
+      - "5656:80"
+    depends_on:
+      - redis-service
+    restart: always
+    networks:
+      - my_network
+
+volumes:
+  pgdata:
+
+networks:
+  my_network:
+    name: my_voucher_system_infra_network
+    external: true

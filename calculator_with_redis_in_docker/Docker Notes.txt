@@ -1,6 +1,0 @@
-docker run --name myredis -p 6379:6379 -d redis
-docker run --name mypostgres -p 5432:5432 -e POSTGRES_PASSWORD=P@ssword_123 -d postgres
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=P@ssword_123" --name mysqlserver2022 -p 5533:1433 -d mcr.microsoft.com/mssql/server:2022-latest
-
-
-https://mahedee.net/how-to-connet-sql-server-from-docker-using-ssms/

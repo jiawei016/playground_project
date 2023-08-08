@@ -1,0 +1,16 @@
+Install NVM
+https://github.com/coreybutler/nvm-windows#readme
+nvm install 19.9.0
+nvm use 19.9.0
+npm install -g @angular/cli@16.1.8
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser
+
+Step 1: Create a network
+docker network create -d bridge my_voucher_system_infra_network
+
+Step 2: Create a Postgres Container
+docker volume create postgres-volume
+docker run --name my-postgres --restart=always --network=my_voucher_system_infra_network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=P@ssword_123 -p 5432:5432 -v pgdata:/var/lib/postgresql/data -d postgres
+
+Step 3: Execute docker-compose
+docker-compose -f "docker-compose-env.yaml" up -d

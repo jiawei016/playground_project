@@ -12,23 +12,24 @@ spec:
       labels:
         app: my-postgres
     spec:
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: my-database-persistent-volume-claim
       containers:
         - name: my-k8s-container-postgres
           image: postgres:latest
           env:
-          - name: POSTGRES_USER
-            value: "postgres"
-          - name: POSTGRES_PASSWORD
-            value: "P@ssword_123"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-pgpassword-secret
+                  key: PGPASSWORD
           ports:
-          - containerPort: 5432
-          resources:
-            limits:
-              cpu: "1"
-              memory: "1Gi"
+            - containerPort: 5432
           volumeMounts:
-          - name: pgdata
-            mountPath: /var/lib/postgresql/data
-      volumes:
-      - name: pgdata
-        emptyDir: {}
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres

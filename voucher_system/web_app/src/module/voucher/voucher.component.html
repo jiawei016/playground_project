@@ -1,0 +1,47 @@
+
+<div class="card-row">
+    <div class="card">
+        <div class="card-header">
+            <h3>Produce Voucher</h3>
+        </div>
+        <div class="card-body">
+            <div>
+                <input type="text" [(ngModel)]="inputVoucherName" placeholder="Voucher Name">
+            </div>
+            <div>
+                <input type="text" [(ngModel)]="inputVoucherValue" placeholder="Voucher Value">
+            </div>
+            <div>
+                <button (click)="produceVoucher()">Produce Voucher</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-row">
+    <div class="card">
+        <div class="card-header">
+            <h3>Voucher Compete Client 1</h3>
+            <h5>List of Vouchers Redeemed:</h5>
+            <ul>
+                <li *ngFor="let value of redeemedVouchers1">{{ value }}</li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <button (click)="redeemVoucher('client1')">Compete</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Voucher Compete Client 2</h3>
+            <h5>List of Vouchers Redeemed:</h5>
+            <ul>
+                <li *ngFor="let value of redeemedVouchers2">{{ value }}</li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <button (click)="redeemVoucher('client2')">Compete</button>
+        </div>
+    </div>
+</div>
