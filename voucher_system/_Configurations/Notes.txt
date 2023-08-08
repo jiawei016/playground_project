@@ -14,3 +14,4 @@ docker run --name my-postgres --restart=always --network=my_voucher_system_infra
 
 Step 3: Execute docker-compose
 docker-compose -f "docker-compose-env.yaml" up -d
+docker-compose -f "docker-compose-production.yaml" up -d

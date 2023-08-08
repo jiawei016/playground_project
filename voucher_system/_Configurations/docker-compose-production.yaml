@@ -81,9 +81,7 @@ services:
       - my_network
 
   angular-app:
-    build:
-      dockerfile: Dockerfile
-      context: ../web_app
+    image: 'jiawei016/voucher-system-angular-app'
     container_name: angular-app
     expose:
       - "4200"
@@ -91,9 +89,7 @@ services:
       - "4200:80"
   
   voucher_api_producer:
-    build:
-      dockerfile: Dockerfile
-      context: ../api_voucher_system
+    image: 'jiawei016/voucher-system-api-voucher-producer'
     container_name: api_voucher_system
     ports:
       - "5353:80"
@@ -106,9 +102,7 @@ services:
       - my_network
 
   voucher_service_consumer:
-    build:
-      dockerfile: Dockerfile
-      context: ../KafkaConsumer
+    image: 'jiawei016/voucher-system-woker-consumer'
     container_name: kafka_consumer
     depends_on:
       - kafka-service
@@ -120,9 +114,7 @@ services:
       - my_network
   
   voucher_api_client:
-    build:
-      dockerfile: Dockerfile
-      context: ../api_voucher_client
+    image: 'jiawei016/voucher-system-api-voucher-client'
     container_name: api_voucher_client
     ports:
       - "5656:80"
