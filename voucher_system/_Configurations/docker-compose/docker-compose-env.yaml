@@ -83,7 +83,7 @@ services:
   angular-app:
     build:
       dockerfile: Dockerfile
-      context: ../web_app
+      context: ../../web_app
     container_name: angular-app
     expose:
       - "4200"
@@ -93,7 +93,7 @@ services:
   voucher_api_producer:
     build:
       dockerfile: Dockerfile
-      context: ../api_voucher_system
+      context: ../../api_voucher_system
     container_name: api_voucher_system
     ports:
       - "5353:80"
@@ -108,7 +108,7 @@ services:
   voucher_service_consumer:
     build:
       dockerfile: Dockerfile
-      context: ../KafkaConsumer
+      context: ../../KafkaConsumer
     container_name: kafka_consumer
     depends_on:
       - kafka-service
@@ -122,7 +122,7 @@ services:
   voucher_api_client:
     build:
       dockerfile: Dockerfile
-      context: ../api_voucher_client
+      context: ../../api_voucher_client
     container_name: api_voucher_client
     ports:
       - "5656:80"
