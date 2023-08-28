@@ -12,7 +12,7 @@ using api_voucher_system.Context;
 namespace api_voucher_system.Context.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230808045439_InitialMigration")]
+    [Migration("20230817171312_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
